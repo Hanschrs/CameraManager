@@ -1116,6 +1116,9 @@ open class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate, UIGest
     let exposureDurationPower:Float = 4.0 //the exposure slider gain
     let exposureMininumDuration:Float64 = 1.0/2000.0
     
+    let maxExposure: Float = 3
+    let minExposure: Float = -3
+    
     @objc fileprivate func _exposureStart(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard gestureRecognizer.view != nil else {return}
         let view = gestureRecognizer.view!
@@ -1127,10 +1130,10 @@ open class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate, UIGest
         if (gestureRecognizer.state == .ended) {
             translationY = currentTranslation
         }
-        if (currentTranslation < 0) {
+        if (currentTranslation < 0 && exposureValue < maxExposure) {
             // up - brighter
             exposureValue = 0.5 + min(abs(currentTranslation) / 400, 1) / 2
-        } else if (currentTranslation >= 0) {
+        } else if (currentTranslation >= 0 && exposureValue > minExposure) {
             // down - lower
             exposureValue = 0.5 - min(abs(currentTranslation) / 400, 1) / 2
         }
