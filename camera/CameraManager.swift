@@ -1116,8 +1116,8 @@ open class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate, UIGest
     let exposureDurationPower:Float = 4.0 //the exposure slider gain
     let exposureMininumDuration:Float64 = 1.0/2000.0
     
-    let maxExposure: Float = 3
-    let minExposure: Float = -3
+    let maxExposure: Float = 1.5
+    let minExposure: Float = -1.5
     
     @objc fileprivate func _exposureStart(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard gestureRecognizer.view != nil else {return}
