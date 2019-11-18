@@ -1130,12 +1130,22 @@ open class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate, UIGest
         if (gestureRecognizer.state == .ended) {
             translationY = currentTranslation
         }
-        if (currentTranslation < 0 && exposureValue < maxExposure) {
+        if (currentTranslation < 0) {
             // up - brighter
             exposureValue = 0.5 + min(abs(currentTranslation) / 400, 1) / 2
+            
+            if exposureValue > maxExposure {
+                exposureValue = maxExposure
+            }
+            
         } else if (currentTranslation >= 0 && exposureValue > minExposure) {
             // down - lower
             exposureValue = 0.5 - min(abs(currentTranslation) / 400, 1) / 2
+            
+            if exposureValue < minExposure {
+                exposureValue = minExposure
+            }
+            
         }
         _changeExposureDuration(value: exposureValue)
         
